@@ -1,0 +1,69 @@
+[System]
+Name='theta_fuzzy_'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=25
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='phi_error'
+Range=[-0.2 0.2]
+NumMFs=5
+MF1='phi_ll':'trimf',[-0.3 -0.2 -0.1]
+MF2='phi_lm':'trimf',[-0.2 -0.1 0]
+MF3='phi_mm':'trimf',[-0.1 0 0.1]
+MF4='phi_mh':'trimf',[0 0.1 0.2]
+MF5='phi_hh':'trimf',[0.1 0.2 0.3]
+
+[Input2]
+Name='dphi_error'
+Range=[-2 2]
+NumMFs=5
+MF1='dphi_ll':'trimf',[-3 -2 -1]
+MF2='dphi_lm':'trimf',[-2 -1 0]
+MF3='dphi_mm':'trimf',[-1 0 1]
+MF4='dphi_mh':'trimf',[0 1 2]
+MF5='dphi_hh':'trimf',[1 2 3]
+
+[Output1]
+Name='phi_out'
+Range=[-4 4]
+NumMFs=5
+MF1='phiout_ll':'trimf',[-6 -4 -2]
+MF2='phiout_lm':'trimf',[-4 -2 0]
+MF3='phiout_mm':'trimf',[-2 0 2]
+MF4='phiout_mh':'trimf',[0 2 4]
+MF5='phiout_hh':'trimf',[2 4 6.004]
+
+[Rules]
+5 1, 5 (1) : 1
+5 2, 5 (1) : 1
+5 3, 5 (1) : 1
+5 4, 5 (1) : 1
+5 5, 4 (1) : 1
+4 1, 5 (1) : 1
+4 2, 5 (1) : 1
+4 3, 5 (1) : 1
+4 4, 4 (1) : 1
+4 5, 3 (1) : 1
+3 1, 5 (1) : 1
+3 2, 4 (1) : 1
+3 3, 3 (1) : 1
+3 4, 2 (1) : 1
+3 5, 1 (1) : 1
+2 1, 3 (1) : 1
+2 2, 2 (1) : 1
+2 3, 1 (1) : 1
+2 4, 1 (1) : 1
+2 5, 1 (1) : 1
+1 1, 2 (1) : 1
+1 2, 1 (1) : 1
+1 3, 1 (1) : 1
+1 4, 1 (1) : 1
+1 5, 1 (1) : 1
