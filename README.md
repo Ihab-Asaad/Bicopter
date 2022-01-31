@@ -9,3 +9,4 @@ To visualize the behavior of a real bicopter, the bicopter parts has been design
 # Matlab Simulation:
 Bicopter has 6 degrees of freedom but only 4 input control  (F_1,F_2,α_1,α_2).  It  is  an  under  actuated  system.
 The inputs have been added to the exported model. F_1,F_2 have been saturated to match the real forces that the thrust motors can provide. α_1,α_2 too, as the design doesn’t allow steering motors to perform a full rotation.
+The drag force f has been appended to the center of bicopter.
