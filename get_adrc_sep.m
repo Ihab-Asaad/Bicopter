@@ -1,4 +1,4 @@
-function [b_sep,wc_sep,wo_sep,eps_sep] = get_adrc_sep(Copter_type)
+function [b_sep,wc_sep,wo_sep,eps_sep] = get_adrc_sep()
 ga = 8;
 wc_sep = [ 5.54   9   6    3];
 eps_sep = [0.7 0.3 0.3 0.35];
