@@ -49,8 +49,8 @@ method = PID_controller;
 sim_editor = false; % if true, show bicopter body during simulation
 
 % euler angle control or XY control:
-%method_angle_plane_sw = angle_sw; % = plane_sw
-method_angle_plane_sw = plane_sw;
+method_angle_plane_sw = angle_sw; % = plane_sw
+%method_angle_plane_sw = plane_sw;
 
 % choose euler source: 1 : euler from "quaternions to rotation block",
 % 2: euler calculated from angular velocity
