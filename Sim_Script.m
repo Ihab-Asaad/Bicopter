@@ -6,15 +6,17 @@ warning('off')
 %% setup_path
 bicopter_path = strcat(pwd,'\bicopter_sim\Bicopter_DataFile14.m');
 file_name = strcat(pwd,'\Control_v2');
-%%
+%% Configurations:
 time_delay = 1e-6;
 step_size = '0.001';
 Stop_time = '10.0';
 Step_size = step_size;
 Copter = init_Copter_sim(Stop_time,step_size,'normal','1e-3','off','off','Fixed-step','FixedStepDiscrete');
-%% controllers
+set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','off');
+%% Attitude & altitude control , position control parameters:
 angle_sw = 1;
 plane_sw = 2;
+%% controllers
 PID_controller = 1;
 STSC_controller = 2;
 LADRC_controller = 3;
@@ -28,19 +30,20 @@ STSC_VAL = init_STSC_val();
 [K,L,b,C] = init_ADRC_val();
 [NLADRC_VAL,r,mult_obs,epsi] = init_Non_Linear_ADRC_val();
 fuzzy_controller = init_fuzzy_controller();
-% for adrc with nomral estimator:
+% for adrc with conventional estimator:
 [b_sep,wc_sep,wo_sep,eps_sep] = get_adrc_sep();
 % for adrc with kalman
 %[b_sep,wc_sep,wo_sep,eps_sep] = get_adrc_sep_kalman();
 
+%% Saturations and Controller polarity:
 sat_max = [7;7;0.3;0.3];
 sat_min = [0;0;-0.3;-0.3];
 polarity = [-1;1;1;1];
 
 %% choose control method
 
-method = PID_controller;
-%method = STSC_controller;
+%method = PID_controller;
+method = STSC_controller;
 %method = LADRC_controller;
 %method = ADRC_SEP;
 %method = fuzzy_logic;
@@ -49,8 +52,8 @@ method = PID_controller;
 sim_editor = false; % if true, show bicopter body during simulation
 
 % euler angle control or XY control:
-method_angle_plane_sw = angle_sw; % = plane_sw
-%method_angle_plane_sw = plane_sw;
+%method_angle_plane_sw = angle_sw; % = plane_sw
+method_angle_plane_sw = plane_sw;
 
 % choose euler source: 1 : euler from "quaternions to rotation block",
 % 2: euler calculated from angular velocity
@@ -115,30 +118,20 @@ end
 set_param(controllers(method),'commented','off')
 
 if sim_editor
-    set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','off')
+    set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','on');
+    cd 'bicopter_sim' ; % change path before running the simulation:
 end
 mux_bicopter = get_param('Control_v2/System/Bicopter_Mux','PortHandles');
-% mux_tricopter = get_param('Control_v2/System/Tricopter_Mux','PortHandles');
-% mux_m_tricopter = get_param('Control_v2/System/Tricopter_Mux_m','PortHandles');
+
 
 angle_plane_sw = get_param('Control_v2/System/angle_plane_sw','PortHandles');
 mux_angle_ref_angle = get_param('Control_v2/System/angle_ref_angle','PortHandles');
 mux_plane_ref_angle = get_param('Control_v2/System/plane_ref_angle','PortHandles');
 
-% sw = get_param('Control_v2/System/Copter_switch','PortHandles');
-    
-cd 'bicopter_sim'  % change path before running the simulation:
-sw_copter = 1;
 model_wrk.FileName = bicopter_path;
 set_param('Control_v2/System/Bicopter','commented','off');
 set_param('Control_v2/System/Bicopter_Mux','commented','off');
-% set_param('Control_v2/System/Tricopter','commented','on');
-% set_param('Control_v2/System/Tricopter_Mux','commented','on');
-% set_param('Control_v2/System/Tricopter_modified','commented','on');
-% set_param('Control_v2/System/Tricopter_Mux_m','commented','on');
-    %set_param('Control_v2/Bicopter_Mux','Inputs','2');
-    %set_param('Control_v2/Tricopter_Mux','Inputs','6');
-    %set_param('Control_v2/switch_copter', 'sw', '1');
+
 try
   add_line('Control_v2',mux_bicopter.Outport(1),sw.Inport(2));
 catch exception
@@ -155,8 +148,6 @@ try
 catch exception
   fprintf('already done\n');
 end
-
-
 
 if method_angle_plane_sw == angle_sw
     try
