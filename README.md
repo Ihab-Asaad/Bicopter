@@ -52,4 +52,4 @@ low-pass filters are used to:
 you can change the parameter of each filter in Sim_Script.m file.
 
 ## Attitude and altitude control/Position Control:
-Choose between controlling Bi-copter attitude and altitude or position controll in space using 'method_angle_plane_sw' parameter.
+Choose between controlling Bi-copter attitude and altitude or position control in space using 'method_angle_plane_sw' parameter.
