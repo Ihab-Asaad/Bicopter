@@ -12,7 +12,6 @@ step_size = '0.001';
 Stop_time = '10.0';
 Step_size = step_size;
 Copter = init_Copter_sim(Stop_time,step_size,'normal','1e-3','off','off','Fixed-step','FixedStepDiscrete');
-set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','off');
 %% Attitude & altitude control , position control parameters:
 angle_sw = 1;
 plane_sw = 2;
@@ -120,6 +119,9 @@ set_param(controllers(method),'commented','off')
 if sim_editor
     set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','on');
     cd 'bicopter_sim' ; % change path before running the simulation:
+    
+else
+    set_param('Control_v2','SimMechanicsOpenEditorOnUpdate','off');
 end
 mux_bicopter = get_param('Control_v2/System/Bicopter_Mux','PortHandles');
 
